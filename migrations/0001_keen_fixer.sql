@@ -1,0 +1,1 @@
+ALTER TABLE "speeches" ADD COLUMN "audio_url" text NOT NULL;

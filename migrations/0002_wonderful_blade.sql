@@ -1,0 +1,1 @@
+ALTER TABLE "speeches" RENAME COLUMN "source_owner_id" TO "source_owner";

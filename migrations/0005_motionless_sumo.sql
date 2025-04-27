@@ -1,0 +1,1 @@
+ALTER TABLE "translations" ALTER COLUMN "speech_id" SET NOT NULL;
