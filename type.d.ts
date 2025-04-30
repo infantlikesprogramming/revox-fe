@@ -1,6 +1,7 @@
 interface Speech {
   id: string;
   title: string;
+  vi_title: string;
   topicId: string[];
   peopleId: string[];
   sourceImage: string;
@@ -29,6 +30,7 @@ interface Person {
   shortSummary: string;
   longSummary: string;
   speechesId: string[];
+  englishSummary: string;
 }
 
 interface Topic {

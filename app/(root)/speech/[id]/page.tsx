@@ -23,6 +23,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       topicName: topics.topicName,
       peopleName: people.personName,
       peopleSummary: people.shortSummary,
+      vi_title: speeches.vi_title,
     })
     .from(speeches)
     .leftJoin(people, sql`${speeches.peopleId} && ARRAY[${people.id}]`)
@@ -60,6 +61,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           speechSummary={result[0].speechSummary}
           coverUrl={result[0].coverUrl}
           audioLink={result[0].audioLink}
+          vi_title={result[0].vi_title}
         />
       </section>
     </div>

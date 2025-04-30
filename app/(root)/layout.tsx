@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 import SkeletonCard from "@/components/SkeletonCard";
 import { Suspense } from "react";
 
@@ -13,6 +15,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         <Suspense fallback={<SkeletonCard />}>
           <div className="grow">{children}</div>
         </Suspense>
+        <Footer />
       </div>
     </main>
   );

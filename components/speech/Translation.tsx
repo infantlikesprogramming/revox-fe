@@ -48,6 +48,7 @@ interface Props {
   speechSummary: string;
   coverUrl: string;
   audioLink: string;
+  vi_title: string | null;
 }
 
 const Translation = ({
@@ -65,6 +66,7 @@ const Translation = ({
   speechSummary,
   coverUrl,
   audioLink,
+  vi_title,
 }: Props) => {
   const [requestTranslation, setRequestTranslation] = useState(false);
 
@@ -72,7 +74,8 @@ const Translation = ({
     <div className="flex flex-col mt-15 gap-5 justify-center mx-5">
       <div className="flex flex-wrap gap-10 md:gap-20 ">
         <div className="flex flex-col gap-2 text-1xl md:max-w-1/2">
-          <p className="font-semibold text-lg md:text-3xl"> {title}</p>
+          <p className="font-semibold text-lg md:text-3xl"> {vi_title}</p>
+          <p className="font-medium">Tên gốc: {title}</p>
           <p className="font-medium">Chủ đề: {topicName}</p>
           <p className="font-medium">
             Nhân vật:{" "}

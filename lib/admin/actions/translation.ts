@@ -74,6 +74,7 @@ interface NewSpeechSpeaker {
   create: boolean;
   long_summary?: string;
   short_summary?: string;
+  english_summary?: string;
 }
 interface NewSpeechTopic {
   id?: string;
@@ -92,6 +93,17 @@ interface NewSpeechRequest {
 }
 
 interface SpeechTranslationProps {}
+
+export const activateServer = async () => {
+  const response = await fetch(`${revoxApiUrl}`, {
+    method: "GET", // HTTP method
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  console.log((await response.json()).message);
+};
+
 export const createNewSpeech = async (params: ParamProps) => {
   console.log(params);
 
@@ -133,6 +145,7 @@ export const createNewSpeech = async (params: ParamProps) => {
       id: existSpeaker.id,
       name: existSpeaker.personName,
       info: existSpeaker.longSummary,
+      english_summary: existSpeaker.englishSummary,
       create: false,
       org: existSpeaker.org,
     });

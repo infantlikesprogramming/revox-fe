@@ -11,6 +11,7 @@ import {
 export const speeches = pgTable("speeches", {
   id: uuid("id").notNull().primaryKey().defaultRandom().unique(),
   title: varchar("title", { length: 511 }).notNull(),
+  vi_title: varchar("vi_title", { length: 511 }),
   topicName: varchar("topic_name", { length: 255 }).notNull(),
   topicId: uuid("topic_ids").array().notNull(),
   peopleId: uuid("people_ids").array().notNull(),
@@ -24,6 +25,7 @@ export const speeches = pgTable("speeches", {
   speechSummary: text("speech_summary").notNull(),
   coverUrl: text("cover_url").notNull(),
   translationId: uuid("translation_id").array().notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const people = pgTable("people", {
@@ -33,6 +35,7 @@ export const people = pgTable("people", {
   personImage: text("person_image").notNull(),
   shortSummary: text("short_summary").notNull(),
   longSummary: text("long_summary").notNull(),
+  englishSummary: text("english_summary"),
   speechesId: uuid("speeches_id").array().notNull(),
 });
 

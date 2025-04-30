@@ -67,6 +67,7 @@ const UrlField = ({ form }: Props) => {
         <Button
           type="button"
           className="bg-[#DFA332]  hover:bg-[#C5902D]"
+          disabled={isLoading}
           onClick={() => {
             setGetInfoState(true);
           }}

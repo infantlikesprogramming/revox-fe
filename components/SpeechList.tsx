@@ -12,6 +12,7 @@ import { eq, sql } from "drizzle-orm";
 interface Props {
   id: string;
   title: string;
+  vi_title: string | null;
   peopleId: string[];
   sourceImage: string;
   sourceUrl: string;

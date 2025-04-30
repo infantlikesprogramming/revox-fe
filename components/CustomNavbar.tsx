@@ -46,7 +46,7 @@ export default function CustomNavbar({ topics, people }: Props) {
         </div>
 
         <div
-          className={`absolute z-10 bg-[#5FBE70] divide-y divide-gray-100 rounded-lg shadow-sm w-full sm:w-[150px] transition-all duration-300 ease-in-out ${
+          className={`absolute z-10 bg-[#5FBE70] max-h-40 overflow-y-auto  divide-y divide-gray-100 rounded-lg shadow-sm w-full sm:w-[150px] transition-all duration-300 ease-in-out ${
             isPersonOpen
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-2 pointer-events-none"
@@ -93,7 +93,7 @@ export default function CustomNavbar({ topics, people }: Props) {
         </div>
 
         <div
-          className={`absolute z-10 bg-[#5FBE70] divide-y divide-gray-100 rounded-lg shadow-sm w-[120px] transition-all duration-300 ease-in-out ${
+          className={`absolute z-10 bg-[#5FBE70] divide-y overflow-y-auto  divide-gray-100 rounded-lg shadow-sm w-[120px] transition-all duration-300 ease-in-out ${
             isTopicOpen
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-2 pointer-events-none"

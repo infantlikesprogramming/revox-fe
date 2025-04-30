@@ -53,15 +53,15 @@ const ComboboxExistingTopics = ({
                 ? topics.find(
                     (topic) => JSON.stringify(topic.value) === field.value,
                   )?.label
-                : "Tim chu de ..."}
+                : "Tìm chủ đề ..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-64 p-0">
             <Command>
-              <CommandInput placeholder="Tim chu de ..." />
+              <CommandInput placeholder="Tìm chủ đề ..." />
               <CommandList>
-                <CommandEmpty>Khong tim thay chu de.</CommandEmpty>
+                <CommandEmpty>Không tìm thấy chủ đề.</CommandEmpty>
                 <CommandGroup className="text-black">
                   {topics.map((topic) => (
                     <CommandItem

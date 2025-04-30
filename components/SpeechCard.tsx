@@ -13,6 +13,7 @@ import config from "@/lib/config";
 interface Props {
   id: string;
   title: string;
+  vi_title: string | null;
   peopleId: string[];
   sourceImage: string;
   sourceUrl: string;
@@ -36,6 +37,7 @@ const SpeechCard = ({
   speechSummary,
   coverUrl,
   people,
+  vi_title,
 }: Props) => {
   return (
     <div>
@@ -93,6 +95,9 @@ const SpeechCard = ({
             {/*</div>*/}
           </div>
         </div>
+        <div>
+          <p className="font-semibold">Tiếng Việt: {vi_title}</p>
+        </div>
         <div className="flex flex-wrap gap-2 font-medium text-sm items-start">
           <span className="h-2">
             <Link
@@ -114,7 +119,7 @@ const SpeechCard = ({
           <span className="item-gradient">{publishDate} •</span>
           <span className="item-gradient">{language} </span>
         </div>
-        <div>
+        <div className="max-h-50 overflow-hidden line-clamp-5">
           <p className="text-sm">{speechSummary}</p>
         </div>
       </div>

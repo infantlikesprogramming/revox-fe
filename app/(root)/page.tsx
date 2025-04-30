@@ -4,14 +4,30 @@ import { sampleSpeeches } from "@/constant";
 import React from "react";
 import { db } from "@/database/drizzle";
 import { speeches } from "@/database/schema";
-import { eq } from "drizzle-orm";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { desc, asc } from "drizzle-orm";
 // export const dynamic = "force-dynamic"; // Disable caching
 
-const Home = async () => {
+interface Props {
+  searchParams?: { page?: string };
+}
+const ITEMS_PER_PAGE = 10;
+const Home = async ({ searchParams }: Props) => {
+  const currentPage = Number((await searchParams)?.page || "1");
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
   const sampleSpeeches = await db
     .select({
       id: speeches.id,
       title: speeches.title,
+      vi_title: speeches.vi_title,
       peopleId: speeches.peopleId,
       sourceImage: speeches.sourceImage,
       sourceUrl: speeches.sourceUrl,
@@ -22,7 +38,13 @@ const Home = async () => {
       coverUrl: speeches.coverUrl,
     })
     .from(speeches)
-    .limit(20);
+    .orderBy(desc(speeches.createdAt))
+    .limit(ITEMS_PER_PAGE)
+    .offset(offset);
+
+  const totalSpeeches = await db.select({ count: speeches.id }).from(speeches);
+  const totalCount = totalSpeeches.length;
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   return (
     <div>
@@ -37,6 +59,46 @@ const Home = async () => {
       <section className="mt-20 px-5 flex flex-col">
         <p className="text-2xl font-semibold">Tiêu biểu</p>
         <SpeechList speeches={sampleSpeeches} />
+        {totalPages > 1 && (
+          <div className="mt-8 flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href={`/?page=${currentPage - 1}`}
+                    aria-disabled={currentPage <= 1}
+                    className={
+                      currentPage <= 1 ? "pointer-events-none opacity-50" : ""
+                    }
+                  />
+                </PaginationItem>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (page) => (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        href={`/?page=${page}`}
+                        isActive={page === currentPage}
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ),
+                )}
+                <PaginationItem>
+                  <PaginationNext
+                    href={`/?page=${currentPage + 1}`}
+                    aria-disabled={currentPage >= totalPages}
+                    className={
+                      currentPage >= totalPages
+                        ? "pointer-events-none opacity-50"
+                        : ""
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </section>
     </div>
   );

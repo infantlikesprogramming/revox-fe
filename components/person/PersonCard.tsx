@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { IKImage, ImageKitProvider } from "imagekitio-next";
 import config from "@/lib/config";
 
-type Props = Omit<Person, "shortSummary" | "speechesId">;
+type Props = Omit<Person, "shortSummary" | "speechesId" | "englishSummary">;
 const PersonCard = ({
   id,
   personName,
@@ -37,17 +37,21 @@ const PersonCard = ({
       <div className="flex flex-col gap-2 grow ">
         <div className="flex flex-wrap justify-between font-bold font-josefin-sans">
           <p className=" w-60">{personName}</p>{" "}
-          <p className="w-30 sm:w-50 sm:text-right sm:pr-2">{org}</p>
+          <p className="w-30 max-[475px]:w-full sm:w-50 sm:text-right sm:pr-2">
+            {org}
+          </p>
         </div>
         <p className="w-full">{longSummary}</p>
         <div>
-          <Link href={`/person/${id}`}>
-            {pathname === "/person" && (
-              <p className="text-sm text-[#00FBFF] font-semibold">
-                Các bài nói chuyện
-              </p>
-            )}
-          </Link>
+          <div className="flex ">
+            <Link href={`/person/${id}`} className="active:opacity-80">
+              {pathname === "/person" && (
+                <p className="text-sm text-[#00FBFF] font-semibold">
+                  Các bài nói chuyện
+                </p>
+              )}
+            </Link>
+          </div>
         </div>
       </div>
     </div>

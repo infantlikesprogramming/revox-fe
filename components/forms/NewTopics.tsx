@@ -58,7 +58,7 @@ const NewTopics = ({ fields, remove, form }: Props) => {
           </div>
 
           <div className="flex flex-col gap-1 ">
-            <p>Anh minh hoa:</p>
+            <p>Ảnh minh họa:</p>
             <FormField
               control={form.control}
               name={`newTopics.${index}.topicImage`}

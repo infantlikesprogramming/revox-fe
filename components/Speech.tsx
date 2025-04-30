@@ -31,6 +31,7 @@ interface Props {
   speechSummary: string;
   coverUrl: string;
   audioLink: string;
+  vi_title: string | null;
 }
 
 const Speech = (params: Props) => {

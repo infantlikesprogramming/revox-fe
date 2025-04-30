@@ -1,6 +1,6 @@
 "use client";
 import { redirect } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { z } from "zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ComboboxExistingSpeakers from "@/components/forms/ComboboxExistingSpeakers";
-import { createNewSpeech } from "@/lib/admin/actions/translation";
+import {
+  createNewSpeech,
+  activateServer,
+} from "@/lib/admin/actions/translation";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -25,6 +28,8 @@ import NewTopics from "@/components/forms/NewTopics";
 import { Textarea } from "@/components/ui/textarea";
 import UrlField from "@/components/forms/UrlField";
 import ImageUpload from "@/components/ImageUpload";
+import { Loader2 } from "lucide-react";
+import { sleep } from "gel/dist/utils";
 export const maxDuration = 20; // This function can run for a maximum of 20 seconds
 
 const formSchema = z.object({
@@ -81,6 +86,18 @@ interface Props {
 const NewSpeechForm = ({ allPeople, allTopics }: Props) => {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+  const [activating, setActivating] = useState(false);
+  useEffect(() => {
+    const fetchHello = async () => {
+      if (!activating) return;
+      try {
+        await activateServer();
+      } finally {
+        setActivating(false);
+      }
+    };
+    fetchHello();
+  }, [activating]);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -162,6 +179,22 @@ const NewSpeechForm = ({ allPeople, allTopics }: Props) => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 text-sm flex flex-col gap-5"
       >
+        <div>
+          <Button
+            type="button"
+            disabled={activating}
+            className="bg-[#DFA332]  hover:bg-[#C5902D] active:bg-[#966e23]"
+            onClick={() => {
+              setActivating(true);
+            }}
+          >
+            {activating ? (
+              <span>Hãy chờ 30 giây nhé</span>
+            ) : (
+              <span>Kích hoạt server</span>
+            )}
+          </Button>
+        </div>
         <UrlField form={form} />
         <FormField
           name="transcript"
@@ -325,7 +358,7 @@ const NewSpeechForm = ({ allPeople, allTopics }: Props) => {
             type="submit"
             disabled={submitting}
           >
-            Submit
+            Gửi
           </Button>
         </div>
       </form>
